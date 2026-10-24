@@ -4,8 +4,8 @@ Entry point for the complete F1 25 race engineering system.
 
 Runs three things concurrently using asyncio:
   - UDP listener:     receives telemetry packets from PS5 on port UDP_PORT
-  - Engineer cycle:   calls Claude API every ENGINEER_CYCLE_SECONDS, or on
-                      critical events detected by the state manager
+  - Engineer cycle: checks every ENGINEER_CHECK_INTERVAL_S whether the
+                      engineer should speak, and if so calls Gemini
   - WebSocket server: broadcasts a live JSON snapshot to all dashboard
                       clients every BROADCAST_INTERVAL_SECONDS
 
@@ -202,7 +202,7 @@ def _build_multicar_and_proximity_fields(state: dict, briefing: dict,
         "lap_history":         briefing["lap_history_summary"],
         "sector_1_time":       state["sector1_time_ms"],
         "sector_2_time":       state["sector2_time_ms"],
-        "sector_3_time":       None,
+        "sector_3_time":       None, """reason being because sector 3 time is not yet extracted from telemetry packets, so it's set to None for now. andd calculated in state manager when available. """
         "current_sector":      state["sector"],
         "exit_position":       None,
         "free_air":            True,
