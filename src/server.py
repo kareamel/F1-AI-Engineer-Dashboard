@@ -204,7 +204,7 @@ def _build_multicar_and_proximity_fields(state: dict, briefing: dict,
         "sector_2_time":       state["sector2_time_ms"],
         "sector_3_time":       None, """reason being because sector 3 time is not yet extracted from telemetry packets, so it's set to None for now. andd calculated in state manager when available. """
         "current_sector":      state["sector"],
-        "exit_position":       None,
+        "exit_position":       state["pit_rejoin_position"],
         "free_air":            True,
         "traffic_driver":      None,
         "traffic_gap":         None,
